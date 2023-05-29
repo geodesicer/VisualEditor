@@ -1,0 +1,18 @@
+# Ignore macOS Finder user-related files
+.DS_Store
+#.gitignore
+
+# Ignore frameworks generated
+frameworks/
+
+# Ignore Xcode user-related files
+xcuserdata/
+
+# Ignore Carthage installed files
+Carthage/
+
+# Ignore generated documentation
+# Saving it to git, since some Mac's wont have the
+# swift-doc installed and working.
+#
+# doc/
