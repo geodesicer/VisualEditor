@@ -8,6 +8,8 @@
 import SwiftUI
 
 
+//typealias TPointColor = (point: CGPoint, color: Color)
+
 /**
  1. Each VDraggableRect3 handles its own DragGesture, updating dragState as it's being dragged.
  2. The rectPosition for each VDraggableRect3 is updated when the drag ends (onEnded).
@@ -18,47 +20,40 @@ import SwiftUI
  */
 
 struct VDragEditor3: View {
-    @State private var position1 = CGPoint(x: 100, y: 100)
-    @State private var position2 = CGPoint(x: 150, y: 250)
-//    @State private var rect1Frame: CGRect = .zero
-//    @State private var rect2Frame: CGRect = .zero
+    @State private var moving: CGPoint = CGPoint(x: 200, y: 300)
+    @State private var targetAreaFrame: CGRect = .zero
+
+    @State public var positions: [
+        TPointColor] = [
+            (CGPoint(x: 20, y: 20), randomColor()),
+            (CGPoint(x: 140, y: 20), randomColor()),
+            (CGPoint(x: 260, y: 20), randomColor()),
+            (CGPoint(x: 380, y: 20), randomColor()),
+            (CGPoint(x: 500, y: 20), randomColor()),
+            (CGPoint(x: 620, y: 20), randomColor()),
+       ]
+    
 
     var body: some View {
-        let isIntersecting = CGRect(origin: position1, size: CGSize(width: 100, height: 100))
-            .intersects(CGRect(origin: position2, size: CGSize(width: 100, height: 100)))
-
-        return ZStack {
-            if isIntersecting {
-                Color.red
-            } else {
-                Color.green
+        ZStack {
+            ForEach(positions.indices, id: \.self) { index in
+                VDraggableRect3(bPos: $positions[index].point, color: positions[index].color)
+                    .preference(key: FramePreferenceKey.self, value: targetAreaFrame)
             }
-
-            VDraggableRect3(position: $position1, /* rectFrame: $rect1Frame,*/ color: Color.yellow)
-                //.frame(width: rect1Frame.width, height: rect1Frame.height)
-                //.position(rect1Position)
-
-            VDraggableRect3(position: $position2, /* rectFrame: $rect2Frame, */ color: Color.orange)
-                //.frame(width: rect2Frame.width, height: rect2Frame.height)
-                //.position(rect2Position)
+            
+            VDraggableRect3(bPos: $moving, color: .blue)
         }
-        .onChange(of: position1) { _ in
-            checkIntersect()
-        }
-        .onChange(of: position2) { _ in
-            checkIntersect()
+        .onPreferenceChange(FramePreferenceKey.self) { value in
+            self.targetAreaFrame = value
         }
     }
 
-    private func checkIntersect() {
-        let rect1 = CGRect(origin: position1, size: CGSize(width: 100, height: 100))
-        let rect2 = CGRect(origin: position2, size: CGSize(width: 100, height: 100))
-        print("rect1 = \(rect1)")
-        print("rect2 = \(rect2)")
-        if rect1.intersects(rect2) {
-            print("Intersected")
-        } else {
-            print("Not Intersected")
+    func isInsideTarget() -> Bool  {
+        var isIntersecting = false
+        
+        for target in positions {
         }
+        
+        return isIntersecting
     }
 }

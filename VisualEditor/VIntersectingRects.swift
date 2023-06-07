@@ -17,76 +17,44 @@ import SwiftUI
 
 typealias TPointColor = (point: CGPoint, color: Color)
 
-public struct IDView {
-    var id = UUID()
-    var view: any View
-}
-
-
 struct VIntersectingRects: View {
     @GestureState private var dragState = EDragState.inactive
 
     @State public var positions: [
         TPointColor] = [
             (CGPoint(x: 20, y: 20), randomColor()),
-            (CGPoint(x: 140, y: 140), randomColor()),
-            (CGPoint(x: 260, y: 260), randomColor()),
-            (CGPoint(x: 220, y: 20), randomColor()),
-            (CGPoint(x: 340, y: 140), randomColor()),
-            (CGPoint(x: 460, y: 260), randomColor()),
-            (CGPoint(x: 420, y: 20), randomColor()),
-            (CGPoint(x: 540, y: 140), randomColor()),
+//            (CGPoint(x: 140, y: 140), randomColor()),
+//            (CGPoint(x: 260, y: 260), randomColor()),
+//            (CGPoint(x: 220, y: 20), randomColor()),
+//            (CGPoint(x: 340, y: 140), randomColor()),
+//            (CGPoint(x: 460, y: 260), randomColor()),
+//            (CGPoint(x: 420, y: 20), randomColor()),
+//            (CGPoint(x: 540, y: 140), randomColor()),
             (CGPoint(x: 660, y: 260), randomColor()),
        ]
-    
-    var views: [IDView] = []
-    
-    init() {
-//        for index in positions.indices {
-//            views.append(IDView(view: VDraggableRect3(position: $positions[index].point, /* rectFrame: $rect1Frame, */ color: positions[index].color)))
-//        }
-    }
-    
+            
     var body: some View {
-//        let drag = DragGesture()
-//            .updating($dragState) { (value, state, _) in
-//                state = .dragging(translation: value.translation)
-//                print("updating = \(value.translation)")
-//            }
-        
         VStack {
             ZStack {
                 Rectangle()
                     .fill(isIntersecting() ? Color.green : Color.red)
-                    .onPreferenceChange(EDragStatePreferenceKey.self) { value in
-                        print("value!.translation = \(value!.translation)")
-                        //self.childWidth = value!.translation
+                //                    .onPreferenceChange(EDragStatePreferenceKey.self) { value in
+                //                        print("value!.translation = \(value!.translation)")
+                //                    }
+                //Text("Very Good")
+                    .frame(width: 100, height: 50)
+                //}
+                //            .padding(20)
+                GeometryReader { proxy in
+                    ZStack {
+                        ForEach(positions.indices, id: \.self) { index in
+                            VDraggableRect3(bPos: $positions[index].point, color: positions[index].color)
+                            //Text("Position: ( \(Int(positions[index].point.x)),\(Int(positions[index].point.y)) )")
+                                //.frame(width: 100, height: 50)
+
+                            //                            .preference(key: EDragStatePreferenceKey.self, value: dragState)
+                        }
                     }
-                Text("Very Good")
-                //                .background(GeometryReader { geometry in
-                //                    Color.blue.preference(key: EDragStatePreferenceKey.self, value: dragState)
-                //                })
-            }
-            .frame(width: 100, height: 50)
-            .padding(20)
-            ZStack {
-                ForEach(positions.indices, id: \.self) { index in
-                    VDraggableRect3(position: $positions[index].point, /* rectFrame: $rect1Frame, */ color: positions[index].color)
-                        .preference(key: EDragStatePreferenceKey.self, value: dragState)
-                        //.gesture(drag)
-
-//                        .gesture(
-//                            DragGesture()
-//                                .updating($dragOffset) { value, state, _ in
-//                                    state = value.translation
-//                                    print("state = \(state)'")
-//                                }
-//                                .onEnded { value in
-//                                    positions[index].point.x += value.translation.width
-//                                    positions[index].point.y += value.translation.height
-//                                }
-//                        )
-
                 }
             }
         }
@@ -94,7 +62,6 @@ struct VIntersectingRects: View {
     
     func isIntersecting() -> Bool  {
         var isIntersecting = false
-        //guard positions.count > 1 else { return false }
         
         for primary in positions {
             let first = CGRect(origin: primary.point, size: CGSize(width: 100, height: 100))
