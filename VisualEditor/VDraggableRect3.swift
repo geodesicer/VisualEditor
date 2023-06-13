@@ -16,29 +16,44 @@ struct VDraggableRect3: View {
     var color: Color
     
     var body: some View {
-        let drag = DragGesture()
-            .updating($dragState) { (value, state, transaction) in
-                state = .dragging(translation: value.translation)
-                print("state = \(state)'")
-            }
-            .onChanged { value in
-                self.bPos.x = value.translation.width
-                self.bPos.y = value.translation.height
-            }
-            .onEnded { value in
-                self.pos.x += value.translation.width
-                self.pos.y += value.translation.height
-            }
+//        let drag = DragGesture()
+//            .updating($dragState) { (value, state, transaction) in
+//                state = .dragging(translation: value.translation)
+//                //print("state = \(state)'")
+//            }
+//            .onChanged { value in
+//                self.bPos.x = value.translation.width
+//                self.bPos.y = value.translation.height
+//            }
+//            .onEnded { value in
+//                self.pos.x += value.translation.width
+//                self.pos.y += value.translation.height
+//            }
         
-        return GeometryReader { geometry in
-            Rectangle()
+        //return GeometryReader { geometry in
+         return Rectangle()
                 .fill(color)
                 .frame(width: 100, height: 100)
+                .border(Color.black)
                 .offset(x: self.pos.x + self.dragState.translation.width, y: self.pos.y + self.dragState.translation.height)
-                .gesture(drag)
+                .gesture(DragGesture()
+                    .updating($dragState) { (value, state, transaction) in
+                        state = .dragging(translation: value.translation)
+                        //print("state = \(state)'")
+                    }
+                    .onChanged { value in
+                        self.bPos.x = self.pos.x + value.translation.width
+                        self.bPos.y = self.pos.y + value.translation.height
+                        //print("self.bPos: \(value.translation.description)")
+                    }
+                    .onEnded { value in
+                        self.pos.x += value.translation.width
+                        self.pos.y += value.translation.height
+                    }
+                )
                 .onAppear() {
                     pos = bPos
                 }
-        }
+        //}
     }
 }

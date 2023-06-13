@@ -15,6 +15,12 @@ extension CGPoint: CustomStringConvertible {
     }
 }
 
+extension CGSize: CustomStringConvertible {
+    public var description: String {
+        return "(\(width), \(height))"
+    }
+}
+
 private struct BoundsPreferenceKey: PreferenceKey {
 
     static var defaultValue: CGRect = .zero
