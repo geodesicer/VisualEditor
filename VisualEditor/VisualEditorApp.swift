@@ -13,7 +13,7 @@ import SwiftUI
 struct VisualEditorApp: App {
     var body: some Scene {
         WindowGroup {
-            //VBoxesAndLines()
+            VBoxesAndLines()
             //VDragAndIntersect1()
             //VDragAndIntersect2()
             //VUsingPreferenceKey()
