@@ -16,21 +16,6 @@ struct VDraggableRect3: View {
     var color: Color
     
     var body: some View {
-//        let drag = DragGesture()
-//            .updating($dragState) { (value, state, transaction) in
-//                state = .dragging(translation: value.translation)
-//                //print("state = \(state)'")
-//            }
-//            .onChanged { value in
-//                self.bPos.x = value.translation.width
-//                self.bPos.y = value.translation.height
-//            }
-//            .onEnded { value in
-//                self.pos.x += value.translation.width
-//                self.pos.y += value.translation.height
-//            }
-        
-        //return GeometryReader { geometry in
          return Rectangle()
                 .fill(color)
                 .frame(width: 100, height: 100)
@@ -54,6 +39,5 @@ struct VDraggableRect3: View {
                 .onAppear() {
                     pos = bPos
                 }
-        //}
     }
 }

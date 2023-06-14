@@ -31,8 +31,8 @@ struct VDraggableRect2: View {
                 .gesture(drag)
                 .preference(key: FramePreferenceKey.self, value: geometry.frame(in: .global))
         }
-//        .onPreferenceChange(FramePreferenceKey.self) { value in
-//            print("FramePreferenceKey changed")
-//        }
+        .onPreferenceChange(FramePreferenceKey.self) { value in
+            print("FramePreferenceKey changed")
+        }
     }
 }
