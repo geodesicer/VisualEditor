@@ -8,18 +8,11 @@
 import SwiftUI
 
 
-/**
- prompt: "use swiftui to make a box containing text that you can doubleclick and edit"
- 
- In this code, we have a ZStack that conditionally displays either a TextField or a Text view depending on the value of the isEditing state variable. When isEditing is false, it displays a Text view, and when you double tap the Text view, it sets isEditing to true, switching to the TextField view.
-
- When you hit return or double tap outside the TextField, it sets isEditing to false, switching back to the Text view. The text is stored in the text state variable, so it's preserved between switches.
- */
-
 struct VEditableText: View {
     @Binding var location: CGPoint
     @State private var isEditing = false
-    @State private var text = "^^Edit^^"
+    @State private var text = "Dummy"
+    //@FocusState private var isInFocus: Bool = true
 
     var body: some View {
         ZStack {
@@ -29,15 +22,14 @@ struct VEditableText: View {
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-                .onTapGesture(count: 2) {
-                    isEditing = false
-                }
+                .background(Color.red)
+                //.focused($isInFocus)
             } else {
                 Text(text)
                     .padding()
                     .background(Color.yellow)
                     .cornerRadius(10)
-                    .onTapGesture(count: 2) {
+                    .onLongPressGesture() {
                         isEditing = true
                     }
             }
@@ -51,4 +43,5 @@ struct VEditableText: View {
                 }
         )
     }
+    
 }

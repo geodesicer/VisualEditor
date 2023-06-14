@@ -10,13 +10,13 @@ import SwiftUI
 
 
 struct Line: View {
-    var from: CGPoint
-    var to: CGPoint
+    var from: Box
+    var to: Box
 
     var body: some View {
         Path { path in
-            path.move(to: from)
-            path.addLine(to: to)
+            path.move(to: from.location)
+            path.addLine(to: to.location)
         }
         .stroke(Color.black, lineWidth: 2)
     }

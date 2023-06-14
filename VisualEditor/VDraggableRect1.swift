@@ -8,9 +8,6 @@
 import SwiftUI
 
 
-/**
- In the VDraggableRect1, we have added an .onEnded closure to the DragGesture to update rectPosition when the drag ends.
- */
 
 struct VDraggableRect1: View {
     @GestureState private var dragState = EDragState.inactive

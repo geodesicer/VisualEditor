@@ -8,14 +8,6 @@
 import SwiftUI
 
 
-/**
- Here's a simple example of using PreferenceKey to pass the width of a child view to its parent view:
- 
- 1. We define a custom PreferenceKey (WidthPreferenceKey) that will hold a CGFloat value.
- 2. In ChildView, we use a GeometryReader to get the size of the Text view and then set a preference for WidthPreferenceKey to the width of the view.
- 3. In VUsingPreferenceKey, we use onPreferenceChange to update childWidth whenever the preference for WidthPreferenceKey changes.
- 4. VUsingPreferenceKey displays the width of ChildView, and this will update whenever ChildView's width changes.
- */
 
 struct VUsingPreferenceKey: View {
     @State private var childWidth: CGFloat = 0
